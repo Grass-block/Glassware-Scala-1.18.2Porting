@@ -7,7 +7,8 @@ buildscript {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
     }
 }
-apply plugin: 'scala'
+
+apply plugin: 'java'
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'maven-publish'
@@ -16,7 +17,6 @@ version = "${version}"
 group = 'dev.intelligentcreations.glassware' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'glassware'
 
-// Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
@@ -118,9 +118,9 @@ repositories {
         name = "Azure-SLP"
         url = uri("https://pkgs.dev.azure.com/Kotori316/minecraft/_packaging/mods/maven/v1")
         content {
-            includeModule("com.kotori316", "ScalableCatsForce".toLowerCase())
-            includeModule("org.typelevel", "cats-core_2.13")
-            includeModule("org.typelevel", "cats-kernel_2.13")
+            //includeModule("com.kotori316", "ScalableCatsForce".toLowerCase())
+            //includeModule("org.typelevel", "cats-core_2.13")
+            //includeModule("org.typelevel", "cats-kernel_2.13")
         }
     }
     repositories.stream().filter { it instanceof MavenArtifactRepository }.forEach { repo ->
@@ -138,33 +138,7 @@ repositories {
 }
 
 dependencies {
-    // Specify the version of Minecraft to use. If this is any group other than 'net.minecraft', it is assumed
-    // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
-    // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.18.1-39.0.0'
-
-    // Real mod deobf dependency examples - these get remapped to your current mappings
-    // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
-    // runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}") // Adds the full JEI mod as a runtime dependency
-    // implementation fg.deobf("com.tterrag.registrate:Registrate:MC${mc_version}-${registrate_version}") // Adds registrate as a dependency
-
-    // Examples using mod jars from ./libs
-    // implementation fg.deobf("blank:coolmod-${mc_version}:${coolmod_version}")
-
-    // For more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
-
-    String scala_version = "2.13.7"
-
-    // https://mvnrepository.com/artifact/org.scala-lang/scala-library
-    compileOnly(group: 'org.scala-lang', name: 'scala-library', version: scala_version)
-    // A library of functional programing in Scala
-    compileOnly(group: 'org.typelevel', name: "cats-core_" + scala_version.substring(0, scala_version.lastIndexOf(".")), version: '2.6.2-kotori')
-
-    runtimeOnly(group: "com.kotori316", name: "ScalableCatsForce".toLowerCase(), version: "2.13.7-build-1", classifier: "with-library") {
-        transitive(false)
-    }
+    minecraft 'net.minecraftforge:forge:1.18.2-40.2.14'
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
